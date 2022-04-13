@@ -1,0 +1,76 @@
+body {
+    background-color: #F5F7FB;
+}
+
+main {
+    color: #293264;
+}
+
+.yellowBackground {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.blueBackground {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.trivia {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 200;
+    margin-top: 50px;
+}
+
+.question {
+    font-family: 'Karla', sans-serif;
+    font-size: 16px;
+}
+
+.answers {
+    display: flex;
+    width: 75vw;
+    /* min-width: 600px; */
+}
+
+.individualAnswer {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    text-align: center;
+    margin: 0px 12px 10px 0px;
+    padding: 5px 10px;
+    border: solid 1px #293264;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+
+.individualAnswer.selected {
+    background-color: #D6DBF5;
+    border: none;
+}
+
+
+hr {
+    color: #DBDEF0;
+    opacity: 0.4;
+}
+
+.trivia--check {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    background-color: #4D5B9E;
+    color: #F5F7FB;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
