@@ -11,7 +11,7 @@ export default function Trivia(props){
             <div 
                 className="individualAnswer" 
                 key={answer.id}
-                onClick={() => props.selectAnswer(props.question, answer.id)}
+                onClick={() => props.handleAnswerClick(props.question, answer.id)}
                 style={ answer.isSelected ? style : {}}
             >
                 {he.decode(answer.answer)}
