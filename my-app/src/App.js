@@ -82,13 +82,13 @@ export default function App(){
         setTriviaData(prevData => prevData.map(trivia => {
             trivia.question == question ?
             // change answer 
-            selectAnswer(trivia) :
+            selectAnswer(id, trivia.answers) :
             trivia
         }))
     }
 
-    function selectAnswer(trivia){
-        trivia.answers.map(answer => {
+    function selectAnswer(id, answers){
+        answers.map(answer => {
 
         })
     }
