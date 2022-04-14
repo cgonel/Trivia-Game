@@ -39,6 +39,15 @@ export default function App(){
         }))
     }, [triviaData])
 
+    // when game is done, verify answers
+    React.useEffect(() => {
+        if(endGame.isDone){
+            setTriviaGame(prevData => prevData.map(trivia => {
+                return {...trivia, answers: checkAnswers(trivia.correct_answer, trivia.answers)}
+            })) 
+        }
+    }, [endGame])
+
     function setAnswers(answers) {
         // sets an id, a bool 'isSelected', a bool 'isCorrect' for each answer
         let answer = answers.map(answer => ({
@@ -67,21 +76,25 @@ export default function App(){
         ))
         return answers
     }
-    console.log(endGame)
-    function checkAnswers() {
-        // console.log("Check answers")
 
-        // setTriviaData
-        // triviaData.forEach => answers.forEach =>
-        // if (answer == trivia.correctAnswer) => answer.isCorrect = true
-        // if(answer.isSelected == true && answer.answer != trivia.correctAnswer) => answer.isCorrect = false // count++
-
+    function endTheGame() {
         setEndGame(prevData => (
             {...prevData, isDone: true}
         ))
+    }
 
-        // console.log(count)
-
+    function checkAnswers(correct_answer, answers) {
+        let answerResult = answers.map(answer => (
+            // if(answer.answer == correct_answer){
+            //     // console.log(true)
+            //     return {...answer, isCorrect : true }
+            // } else if (answer.isSelected){
+            //     // console.log(false)
+            //     return {...answer, isCorrect : false }
+            // }
+            answer.answer === correct_answer ? {...answer, isCorrect : true } : answer
+        ))
+        return answerResult
     }
 
     const triviaElements = triviaGame.map(trivia => {
@@ -101,10 +114,12 @@ export default function App(){
             <div className="trivia">
                 {triviaElements}
                 <div style={{textAlign: "center"}}>
-                    <button className="trivia--check" 
-                    onClick={checkAnswers}
+                    <button 
+                        className="trivia--check" 
+                        // onClick={endGame.isDone ? /*replay game*/ : endTheGame}
+                        onClick={endTheGame}
                     >
-                    Check answers
+                    {endGame.isDone ? "Play again" : "Check answers"}
                     </button>
                 </div>
             </div>
