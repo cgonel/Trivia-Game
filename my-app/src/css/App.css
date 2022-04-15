@@ -52,11 +52,24 @@ main {
     cursor: pointer;
 }
 
+.individualAnswerEndGame {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    text-align: center;
+    margin: 0px 12px 10px 0px;
+    padding: 5px 10px;
+    border: solid 1px #293264;
+    border-radius: 8px;
+    cursor: pointer;
+    opacity: 0.5;
+}
 
-.individualAnswer.selected {
+
+/* .individualAnswer.selected {
     background-color: #D6DBF5;
     border: none;
-}
+} */
 
 
 hr {

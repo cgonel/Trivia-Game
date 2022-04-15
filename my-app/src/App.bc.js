@@ -28,16 +28,14 @@ export default function App(){
             const randomPosition = Math.floor(Math.random() * incorrect_answers.length);
             let answers = incorrect_answers;
             answers.splice(randomPosition, 0, correct_answer);
-            answers = setAnswers(correct_answer, answers);
+            answers = setAnswers(answers);
             return answers;
         }
 
         setTriviaGame(triviaData.map(trivia => {
-            return {
-                question: he.decode(trivia.question),
-                answers: concatAnswers(trivia.correct_answer, trivia.incorrect_answers),
-                // correct_answer: trivia.correct_answer
-            }
+            return {question: he.decode(trivia.question),
+            answers: concatAnswers(trivia.correct_answer, trivia.incorrect_answers),
+            correct_answer: trivia.correct_answer}
         }))
     }, [triviaData])
 
@@ -45,30 +43,19 @@ export default function App(){
     React.useEffect(() => {
         if(endGame.isDone){
             setTriviaGame(prevData => prevData.map(trivia => {
-                return {...trivia, answers: checkAnswers(trivia.answers)}
+                return {...trivia, answers: checkAnswers(trivia.correct_answer, trivia.answers)}
             })) 
         }
     }, [endGame])
 
-    function setAnswers(correct_answer, answers) {
-        // sets extra data to determine score at end of the game
-        let answer = answers.map(answer => (
-            answer === correct_answer ? 
-            {
-                id: nanoid(), 
-                answer: answer, 
-                isCorrectAnswer: true,
-                isSelected: false,
-                selectedIsIncorrect: false  
-            } : 
-            {
-                id: nanoid(), 
-                answer: answer, 
-                isCorrectAnswer: false,
-                isSelected: false,
-                selectedIsIncorrect: false  
-            }
-        ));
+    function setAnswers(answers) {
+        // sets an id, a bool 'isSelected', a bool 'isCorrect' for each answer
+        let answer = answers.map(answer => ({
+            id: nanoid(), 
+            answer: answer, 
+            isSelected: false, 
+            isCorrect: null
+        }));
 
         return answer;
     }
@@ -96,20 +83,24 @@ export default function App(){
         ))
     }
 
-    function checkAnswers(answers) {
-        let answerResult = answers.map(answer => {
-            if (!answer.isCorrectAnswer && answer.isSelected){
-                return { ...answer, selectedIsIncorrect: true };
-            } else {
-                return { ...answer }
-            }
-        })
+    function checkAnswers(correct_answer, answers) {
+        let answerResult = answers.map(answer => (
+            // if(answer.answer == correct_answer){
+            //     // console.log(true)
+            //     return {...answer, isCorrect : true }
+            // } else if (answer.isSelected){
+            //     // console.log(false)
+            //     return {...answer, isCorrect : false }
+            // }
+            answer.answer === correct_answer ? {...answer, isCorrect : true } : answer
+        ))
         return answerResult
     }
 
     const triviaElements = triviaGame.map(trivia => {
         return <Trivia 
                     key={trivia.question}
+                    check={checkAnswers}
                     question={trivia.question} 
                     answers={trivia.answers} 
                     handleAnswerClick={handleAnswerClick}
