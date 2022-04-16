@@ -66,12 +66,6 @@ main {
 }
 
 
-/* .individualAnswer.selected {
-    background-color: #D6DBF5;
-    border: none;
-} */
-
-
 hr {
     color: #DBDEF0;
     opacity: 0.4;
@@ -86,4 +80,9 @@ hr {
     padding: 10px 20px;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.score {
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
 }

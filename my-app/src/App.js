@@ -50,6 +50,21 @@ export default function App(){
         }
     }, [endGame])
 
+    // changes endGame state to store correct answers count
+    React.useEffect(() => {
+        if(endGame.isDone) {
+            let correctAnswerCount = 0;
+            triviaGame.forEach(trivia => {
+                trivia.answers.forEach(answer => {
+                    if (answer.isCorrectAnswer && answer.isSelected) {
+                        correctAnswerCount++;
+                    }
+                })
+            })
+            setEndGame({...endGame, results: correctAnswerCount})
+        }
+    }, [triviaGame])
+
     function setAnswers(correct_answer, answers) {
         // sets extra data to determine score at end of the game
         let answer = answers.map(answer => (
@@ -101,11 +116,12 @@ export default function App(){
             if (!answer.isCorrectAnswer && answer.isSelected){
                 return { ...answer, selectedIsIncorrect: true };
             } else {
-                return { ...answer }
+                return answer;
             }
         })
         return answerResult
     }
+    
 
     const triviaElements = triviaGame.map(trivia => {
         return <Trivia 
@@ -124,11 +140,12 @@ export default function App(){
             <div className="trivia">
                 {triviaElements}
                 <div style={{textAlign: "center"}}>
+                    {endGame.isDone && <p className="score">You scored {endGame.results} / 5 correct answers</p>}
                     <button 
                         className="trivia--check" 
                         // onClick={endGame.isDone ? /*replay game*/ : endTheGame}
                         onClick={endTheGame}
-                    >
+                    > 
                     {endGame.isDone ? "Play again" : "Check answers"}
                     </button>
                 </div>
