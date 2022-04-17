@@ -5,6 +5,8 @@ import './css/App.css';
 import blob1 from '../src/media/blob1.png';
 import blob2 from '../src/media/blob2.png';
 import Trivia from './components/Trivia';
+import Confetti from 'react-confetti';
+import MyTimer from './components/Timer'
 
 export default function App(){
     const [triviaData, setTriviaData] = React.useState([]);
@@ -13,11 +15,12 @@ export default function App(){
         results: 0, 
         isDone: false,
     });
+    const [time, setTime] = React.useState(timerExpiry())
 
     // fetches API data
     React.useEffect(() => {
         fetchTriviaData();
-    },[])
+    }, [])
 
     // sets the trivia game
     React.useEffect(() => {
@@ -62,10 +65,16 @@ export default function App(){
         } 
     }, [triviaGame])
 
-    // resets endGame state, when a new game is generated
+    // resets endGame state when a new game is generated
     React.useEffect(() => {
         setEndGame({results: 0, isDone: false});
     }, [triviaData])
+
+    React.useEffect(() => {
+        if (!endGame.isDone) {
+            setTime(timerExpiry())
+        }
+    }, [endGame])
 
     function fetchTriviaData() {
         fetch("https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple")
@@ -137,6 +146,12 @@ export default function App(){
         fetchTriviaData();
     }
 
+    function timerExpiry() {
+        const time = new Date();
+        time.setSeconds(time.getSeconds() + 59); 
+        return time;    
+    }
+    
     const triviaElements = triviaGame.map(trivia => {
         return <Trivia 
                     key={trivia.question}
@@ -149,9 +164,11 @@ export default function App(){
 
     return (
         <main>
+            { endGame.isDone && endGame.results === 5 && <Confetti />}
             <img className="yellowBackground" src={blob1} alt="yellow background"/>
             <img className="blueBackground" src={blob2} alt="blue background"/>
             <div className="trivia">
+                <MyTimer expiryTimestamp={time} endGame={endGame}/>
                 {triviaElements}
                 <div style={{textAlign: "center"}}>
                     {endGame.isDone && <p className="score">You scored {endGame.results} / 5 correct answers</p>}

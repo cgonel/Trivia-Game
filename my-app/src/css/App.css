@@ -19,6 +19,11 @@ main {
     left: 0;
 }
 
+.timer {
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+}
+
 .trivia {
     display: flex;
     flex-direction: column;
