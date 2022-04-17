@@ -16,9 +16,7 @@ export default function App(){
 
     // fetches API data
     React.useEffect(() => {
-        fetch("https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple")
-        .then(data => data.json())
-        .then(data => setTriviaData(data.results));
+        fetchTriviaData();
     },[])
 
     // sets the trivia game
@@ -36,7 +34,6 @@ export default function App(){
             return {
                 question: he.decode(trivia.question),
                 answers: concatAnswers(trivia.correct_answer, trivia.incorrect_answers),
-                // correct_answer: trivia.correct_answer
             }
         }))
     }, [triviaData])
@@ -62,8 +59,19 @@ export default function App(){
                 })
             })
             setEndGame({...endGame, results: correctAnswerCount})
-        }
+        } 
     }, [triviaGame])
+
+    // resets endGame state, when a new game is generated
+    React.useEffect(() => {
+        setEndGame({results: 0, isDone: false});
+    }, [triviaData])
+
+    function fetchTriviaData() {
+        fetch("https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple")
+        .then(data => data.json())
+        .then(data => setTriviaData(data.results));
+    }
 
     function setAnswers(correct_answer, answers) {
         // sets extra data to determine score at end of the game
@@ -88,6 +96,7 @@ export default function App(){
         return answer;
     }
 
+    // selects an answer
     function handleAnswerClick(question, id){
         setTriviaGame(prevData => prevData.map(trivia => (
             trivia.question === question ?
@@ -111,6 +120,7 @@ export default function App(){
         ))
     }
 
+    // checks for erroneous answers
     function checkAnswers(answers) {
         let answerResult = answers.map(answer => {
             if (!answer.isCorrectAnswer && answer.isSelected){
@@ -122,6 +132,10 @@ export default function App(){
         return answerResult
     }
     
+    // resets the trivia data and the endGame state
+    function replayGame() {
+        fetchTriviaData();
+    }
 
     const triviaElements = triviaGame.map(trivia => {
         return <Trivia 
@@ -143,8 +157,7 @@ export default function App(){
                     {endGame.isDone && <p className="score">You scored {endGame.results} / 5 correct answers</p>}
                     <button 
                         className="trivia--check" 
-                        // onClick={endGame.isDone ? /*replay game*/ : endTheGame}
-                        onClick={endTheGame}
+                        onClick={endGame.isDone ? replayGame : endTheGame}
                     > 
                     {endGame.isDone ? "Play again" : "Check answers"}
                     </button>
