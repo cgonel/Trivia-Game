@@ -19,6 +19,18 @@ main {
     left: 0;
 }
 
+.play {
+    font-family: 'Karla', sans-serif;
+    font-weight: bold;
+}
+
+.main-page {
+    text-align: center;
+    position: absolute;
+    top: 40%;
+    left: 45%;
+}
+
 .timer {
     font-family: 'Inter', sans-serif;
     font-weight: bold;

@@ -2,13 +2,11 @@ import React from 'react';
 import { useTimer } from 'react-timer-hook';
 
 
-export default function MyTimer({ expiryTimestamp, endGame }) {
-    // make timer start only when page is loaded
+export default function MyTimer({ expiryTimestamp, endGame, endTheGame }) {
+    // stops timer when game is done
     React.useEffect(() => {
         if (endGame.isDone) {
             pause()
-        } else {
-            restart(expiryTimestamp)
         }
     }, [endGame])
 
@@ -22,14 +20,14 @@ export default function MyTimer({ expiryTimestamp, endGame }) {
           pause,
           resume,
           restart,
-    } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
+    } = useTimer({ expiryTimestamp, onExpire: endTheGame });
 
     return (
         <h1 
             className="timer"
             style={{color: seconds < 10 && "red"}}
         >
-            {minutes}:{seconds}
+            {minutes}:{seconds < 10 ? "0" + seconds : seconds}
         </h1>
     )
 }
