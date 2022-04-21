@@ -19,21 +19,11 @@ main {
     left: 0;
 }
 
-.play {
-    font-family: 'Karla', sans-serif;
-    font-weight: bold;
-}
-
 .main-page {
     text-align: center;
     position: absolute;
     top: 40%;
     left: 45%;
-}
-
-.timer {
-    font-family: 'Inter', sans-serif;
-    font-weight: bold;
 }
 
 .trivia {
@@ -57,7 +47,7 @@ main {
     /* min-width: 600px; */
 }
 
-.individualAnswer {
+/* .individualAnswer {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     font-size: 11px;
@@ -67,9 +57,9 @@ main {
     border: solid 1px #293264;
     border-radius: 8px;
     cursor: pointer;
-}
+} */
 
-.individualAnswerEndGame {
+/* .individualAnswerEndGame {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     font-size: 11px;
@@ -80,7 +70,7 @@ main {
     border-radius: 8px;
     cursor: pointer;
     opacity: 0.5;
-}
+} */
 
 
 hr {
