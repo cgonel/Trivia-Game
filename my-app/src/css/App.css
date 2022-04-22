@@ -47,32 +47,6 @@ main {
     /* min-width: 600px; */
 }
 
-/* .individualAnswer {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 11px;
-    text-align: center;
-    margin: 0px 12px 10px 0px;
-    padding: 5px 10px;
-    border: solid 1px #293264;
-    border-radius: 8px;
-    cursor: pointer;
-} */
-
-/* .individualAnswerEndGame {
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: 11px;
-    text-align: center;
-    margin: 0px 12px 10px 0px;
-    padding: 5px 10px;
-    border: solid 1px #293264;
-    border-radius: 8px;
-    cursor: pointer;
-    opacity: 0.5;
-} */
-
-
 hr {
     color: #DBDEF0;
     opacity: 0.4;

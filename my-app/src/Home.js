@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import './css/App.css';
 import blob1 from '../src/media/blob1.png';
 import blob2 from '../src/media/blob2.png';
@@ -19,14 +20,16 @@ export const Button = styled.button`
     cursor: pointer;
 `
 
-export default function App() {
+export default function Home() {
     return (
         <main>
             <img className="yellowBackground" src={blob1} alt="yellow background"/>
             <img className="blueBackground" src={blob2} alt="blue background"/>
             <div className="main-page">
                 <Title>Quizzical</Title>
-                <Button>Start quiz</Button>
+                <Link to="game">
+                    <Button>Start quiz</Button>
+                </Link>
             </div>
         </main>
     )
