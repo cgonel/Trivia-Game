@@ -1,6 +1,13 @@
 import React from 'react';
 import he from 'he';
 import styled from 'styled-components';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
+const Question = styled.h2`
+    font-family: 'Karla', sans-serif;
+    font-size: 16px;
+`
 
 const Answer = styled.div`
     font-family: 'Inter', sans-serif;
@@ -35,12 +42,25 @@ export default function Trivia(props){
         )
     })
 
+    function Answers({children}) {
+        return (
+            <span
+                style={{
+                    margin: '0 10px 0 0',
+                    paddingBottom: "20px",
+                }}
+            >
+                {children}
+            </span>
+        )    
+    }
+
     return (
         <div>
-            <h2 className="question">{props.question}</h2>
-            <div className="answers">
-                {answerElements}
-            </div>
+            <Question>{props.loading ? <Skeleton height={20}/> : props.question}</Question>
+            <div className={props.loading ? "" : "answers"} >
+                {props.loading ? <Skeleton count={4} inline width={175} height={25} borderRadius={10} wrapper={Answers}/> : answerElements}
+            </div> 
             <hr/>
         </div>
     )

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Routes, Route, Link } from "react-router-dom";
 import './css/App.css';
-import Home from './Home'
-import TriviaGame from './TriviaGame'
+import Home from './routes/Home'
+import TriviaGame from './routes/TriviaGame'
 
 export default function App(){
     return (

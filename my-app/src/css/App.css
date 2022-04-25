@@ -36,15 +36,14 @@ main {
     margin-top: 50px;
 }
 
-.question {
+/* .question {
     font-family: 'Karla', sans-serif;
     font-size: 16px;
-}
+} */
 
 .answers {
     display: flex;
     width: 75vw;
-    /* min-width: 600px; */
 }
 
 hr {

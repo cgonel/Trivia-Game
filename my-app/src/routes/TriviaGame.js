@@ -1,14 +1,15 @@
 import React from 'react';
 import he from 'he';
 import { nanoid } from 'nanoid';
-import blob1 from '../src/media/blob1.png';
-import blob2 from '../src/media/blob2.png';
-import Trivia from './components/Trivia';
 import Confetti from 'react-confetti';
-import MyTimer from './components/Timer'
+import blob1 from '../media/blob1.png';
+import blob2 from '../media/blob2.png';
+import Trivia from '../components/Trivia';
+import MyTimer from '../components/Timer'
 import {Button} from './Home.js'
 
 export default function TriviaGame(){
+    const [loading, setLoading] = React.useState(true);
     const [triviaData, setTriviaData] = React.useState([]);
     const [triviaGame, setTriviaGame] = React.useState([]);
     const [endGame, setEndGame] = React.useState({
@@ -19,8 +20,17 @@ export default function TriviaGame(){
 
     // fetches API data
     React.useEffect(() => {
-        fetchTriviaData();
+        fetch("https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple")
+        .then(data => data.json())
+        .then(data => setTriviaData(data.results));
     }, [])
+
+    // changes loading to false when triviaGame state is updated with the trivia data
+    React.useEffect(() => {
+        if(triviaGame.length != 0){
+            setLoading(false);
+        }
+    },  [triviaGame])
 
     // sets the trivia game
     React.useEffect(() => {
@@ -69,18 +79,6 @@ export default function TriviaGame(){
     React.useEffect(() => {
         setEndGame({results: 0, isDone: false});
     }, [triviaData])
-
-    React.useEffect(() => {
-        if (!endGame.isDone) {
-            // setTime(timerExpiry())
-        }
-    }, [endGame])
-
-    function fetchTriviaData() {
-        fetch("https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple")
-        .then(data => data.json())
-        .then(data => setTriviaData(data.results));
-    }
 
     function setAnswers(correct_answer, answers) {
         // sets extra data to determine score at end of the game
@@ -141,11 +139,6 @@ export default function TriviaGame(){
         return answerResult
     }
     
-    // resets the trivia data and the endGame state
-    function replayGame() {
-        fetchTriviaData();
-    }
-
     function timerExpiry() {
         const time = new Date();
         time.setSeconds(time.getSeconds() + 59); 
@@ -160,6 +153,7 @@ export default function TriviaGame(){
     const triviaElements = triviaGame.map(trivia => {
         return <Trivia 
                     key={trivia.question}
+                    loading={loading}
                     question={trivia.question} 
                     answers={trivia.answers}
                     handleAnswerClick={handleAnswerClick}

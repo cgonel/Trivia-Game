@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import './css/App.css';
-import blob1 from '../src/media/blob1.png';
-import blob2 from '../src/media/blob2.png';
+import '../css/App.css';
+import blob1 from '../media/blob1.png';
+import blob2 from '../media/blob2.png';
 
 const Title = styled.h1`
     font-family: 'Karla', sans-serif;
