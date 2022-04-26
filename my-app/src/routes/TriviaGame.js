@@ -27,7 +27,7 @@ export default function TriviaGame(){
 
     // changes loading to false when triviaGame state is updated with the trivia data
     React.useEffect(() => {
-        if(triviaGame.length != 0){
+        if(triviaGame.length !== 0){
             setLoading(false);
         }
     },  [triviaGame])
